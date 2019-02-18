@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Introduction:
+  = @user.introduction
+
+= link_to 'Edit', edit_user_profile_path(@user)
+\|
+= link_to 'Back', user_path(@user)
