@@ -51,6 +51,8 @@ end
 gem 'simple_form'
 gem 'bootstrap', '~> 4.2.1'
 gem 'haml-rails'
+gem 'enumerize'
+
 group :development, :test do
   gem 'hirb'
   gem 'hirb-unicode'

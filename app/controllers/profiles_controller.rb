@@ -1,5 +1,6 @@
 class ProfilesController < ApplicationController
-  before_action :set_user
+  before_action :set_user, only: %i[edit update show]
+  before_action :set_profile, only: %i[edit update]
 
   # GET /profiles/1
   # GET /profiles/1.json
@@ -8,36 +9,13 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1/edit
   def edit
-    @profile = @user.profile || @user.build_profile
   end
 
-  # POST /profiles
-  # POST /profiles.json
-  def create
-    @profile = @user.build_profile(profile_params)
-
-    respond_to do |format|
-      if @profile.save
-        format.html { redirect_to [@user, @profile], notice: 'Profile was successfully created.' }
-        format.json { render :show, status: :created, location: @profile }
-      else
-        format.html { render :new }
-        format.json { render json: @profile.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /profiles/1
-  # PATCH/PUT /profiles/1.json
   def update
-    respond_to do |format|
-      if @user.profile.update(profile_params)
-        format.html { redirect_to [@user, @profile], notice: 'Profile was successfully updated.' }
-        format.json { render :show, status: :ok, location: @profile }
-      else
-        format.html { render :edit }
-        format.json { render json: @profile.errors, status: :unprocessable_entity }
-      end
+    if @profile.update(profile_params)
+      redirect_to @user, notice: 'Profile was successfully updated.'
+    else
+      render :edit
     end
   end
 
@@ -57,7 +35,11 @@ class ProfilesController < ApplicationController
     @user = User.find(params[:user_id])
   end
 
+  def set_profile
+    @profile = @user.profile
+  end
+
   def profile_params
-    params.require(:profile).permit(:introduction)
+    params.require(:profile).permit(:introduction, :sex)
   end
 end

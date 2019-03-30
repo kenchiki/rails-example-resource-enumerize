@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2019_02_18_093328) do
   create_table "profiles", force: :cascade do |t|
     t.text "introduction"
     t.bigint "user_id"
+    t.integer "sex"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id"
